@@ -1,0 +1,34 @@
+Options -Indexes
+ServerSignature Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} !^www\.bigdlmusic\.com$ [NC,OR]
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://www.bigdlmusic.com%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-XSS-Protection "0"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; frame-src https://open.spotify.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; upgrade-insecure-requests"
+</IfModule>
+
+<IfModule mod_setenvif.c>
+  SetEnvIf HTTPS on HTTPS_ON=1
+</IfModule>
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS_ON
+</IfModule>
+
+<FilesMatch "(^\.|composer\.(json|lock)|package(-lock)?\.json|yarn\.lock|pnpm-lock\.yaml|README|LICENSE|\.env)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
