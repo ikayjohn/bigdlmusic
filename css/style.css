@@ -721,10 +721,53 @@ a {
   transition-delay: var(--stagger, 0s);
 }
 
+@media (max-width: 1024px) {
+  .music-shell {
+    --music-art-size: clamp(200px, 26vw, 320px);
+  }
+
+  .about-bg-image {
+    transform: translateY(-120px);
+    margin-bottom: -420px;
+  }
+
+  .about-container {
+    transform: translate(-50%, -60px);
+    bottom: var(--space-lg);
+  }
+
+  .about-display {
+    font-size: clamp(54px, 10vw, 140px);
+  }
+
+  .visuals-canvas {
+    gap: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   #hero {
     justify-content: center;
     padding-top: calc(var(--space-xl) + 36px);
+    background-size: 160%;
+    background-position: center calc(70% + 180px);
+  }
+
+  #hero::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 500px;
+    background: linear-gradient(to bottom, transparent, var(--color-black));
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .hero-cut-layer {
+    background-size: 160%;
+    background-position: center calc(70% + 180px);
   }
 
   .hero-content {
@@ -754,13 +797,14 @@ a {
   }
 
   .hero-bg-logo-ghost.ghost-1 {
-    top: calc(42% + 74px);
-    --ghost-cut-top: clamp(56px, 8vw, 84px);
+    top: calc(42% + 44px);
+    --ghost-cut-top: clamp(44px, 7vw, 70px);
+    opacity: 0.42;
   }
 
   .hero-bg-logo-ghost.ghost-2 {
-    top: calc(42% + 108px);
-    --ghost-cut-top: clamp(92px, 12vw, 132px);
+    top: calc(42% + 72px);
+    --ghost-cut-top: clamp(48px, 8vw, 80px);
   }
 
   .hero-cta-row {
@@ -796,8 +840,38 @@ a {
     height: auto;
   }
 
+  /* About: image fills section, text overlays directly — no overlay */
   #about {
-    min-height: 0;
+    display: block;
+    overflow: hidden;
+    min-height: max(130vw, 600px);
+  }
+
+  #about::after {
+    display: none;
+  }
+
+  .about-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    margin-bottom: 0;
+    object-fit: cover;
+    object-position: center 10%;
+  }
+
+  .about-container {
+    position: absolute;
+    bottom: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - var(--space-md));
+    margin: 0;
+    padding: 0;
+    z-index: 2;
   }
 
   .about-display {
@@ -808,9 +882,9 @@ a {
     padding: 0;
   }
 
-  .about-container {
-    width: min(940px, calc(100% - (var(--space-sm) * 2)));
-    bottom: var(--space-lg);
+  /* Contact: reduce excessive top padding */
+  #contact {
+    padding: var(--space-lg) var(--space-md) 10px;
   }
 
   .visuals-canvas {
@@ -819,8 +893,8 @@ a {
     margin-left: 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 120px;
-    gap: 30px;
+    grid-auto-rows: 100px;
+    gap: 12px;
   }
 
   .vcard {
@@ -829,6 +903,7 @@ a {
     height: 100%;
     aspect-ratio: auto;
     transform: none !important;
+    left: 0 !important;
   }
 
   .vcard img {
@@ -842,13 +917,13 @@ a {
   .v5 { grid-column: 2 / 3; grid-row: 4 / 6; }
   .v6 { grid-column: 3 / 4; grid-row: 4 / 6; }
   .v7 { grid-column: 1 / 2; grid-row: 5 / 6; }
-  .v8 { grid-column: 2 / 3; grid-row: 6 / 8; }
+  .v8 { grid-column: 2 / 3; grid-row: 6 / 8; width: 100%; }
   .v9 { grid-column: 3 / 4; grid-row: 6 / 7; }
 
   .visuals-sig {
     width: 34%;
-    left: 50%;
-    top: 50%;
+    left: 20%;
+    top: 80%;
   }
 
   .section-nav {
@@ -867,8 +942,8 @@ a {
     position: relative;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 120px;
-    gap: 30px;
+    grid-auto-rows: 90px;
+    gap: 8px;
     padding: 0;
   }
 
@@ -879,7 +954,7 @@ a {
   .v5 { grid-column: 2 / 3; grid-row: 4 / 6; }
   .v6 { grid-column: 1 / 2; grid-row: 5 / 7; }
   .v7 { grid-column: 2 / 3; grid-row: 6 / 7; }
-  .v8 { grid-column: 1 / 2; grid-row: 7 / 9; }
+  .v8 { grid-column: 1 / 2; grid-row: 7 / 9; width: 100%; }
   .v9 { grid-column: 2 / 3; grid-row: 7 / 8; }
 
   .visuals-sig {
@@ -913,19 +988,33 @@ a {
   }
 
   .hero-bg-logo-ghost.ghost-1 {
-    top: calc(40% + 64px);
-    --ghost-cut-top: clamp(52px, 10vw, 72px);
+    top: calc(40% + 38px);
+    --ghost-cut-top: clamp(38px, 7vw, 58px);
+    opacity: 0.42;
   }
 
   .hero-bg-logo-ghost.ghost-2 {
-    top: calc(40% + 94px);
-    --ghost-cut-top: clamp(84px, 14vw, 120px);
+    top: calc(40% + 62px);
+    --ghost-cut-top: clamp(40px, 9vw, 64px);
+  }
+
+  .about-bg-image {
+    height: min(64vw, 280px);
+  }
+
+  .about-container {
+    padding-top: var(--space-sm);
+    padding-bottom: var(--space-lg);
   }
 
   #music,
   #contact {
     padding-left: var(--space-sm);
     padding-right: var(--space-sm);
+  }
+
+  #contact {
+    padding-top: var(--space-md);
   }
 
   .section-nav {
